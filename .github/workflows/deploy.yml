@@ -39,7 +39,12 @@ jobs:
         with: # shimataro/ssh-key-actionに渡すパラメーター
           key: ${{ secrets.SSH_KEY }} # 必須
           known_hosts: ${{ secrets.KNOWN_HOSTS }} # 必須
+          config: | 
+            Host target
+              HostName 18.176.3.96
+              User ubuntu
+              IdentityFile ~/.ssh/id_rsa
 
       - name: run deploy script
-        run: ls
+        run: ssh ubuntu@18.176.3.96
 #        run: bash deploy.sh
