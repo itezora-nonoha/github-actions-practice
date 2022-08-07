@@ -47,4 +47,4 @@ jobs:
         run: ssh target sudo docker cp monodance/nuxtjs/src monodance_nuxtjs_1:/home/node
 
       - name: Execute "npm run build"
-        run: ssh target sudo docker exec monodance_nuxtjs_1 "bash -c cd /home/node/src && npm run build"
+        run: ssh target sudo docker exec monodance_nuxtjs_1 bash -c "cd /home/node/src && npm run build"
