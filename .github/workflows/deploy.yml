@@ -5,8 +5,8 @@ name: CI
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
-#  push:
-#    branches: [ "main" ]
+  push:
+    branches: [ "main" ]
 #  pull_request:
 #    branches: [ "main" ]
 
@@ -43,14 +43,15 @@ jobs:
       - name: Deploy to Demo-Server by scp
         run: scp -r README.md ubuntu@target:/home/ubuntu/scp_test
 
+
       - name: Deploy to Nuxtjs Container from Demo-Server
-        run: ssh sudo docker cp monodance/nuxtjs/src monodance_nuxtjs_1:/home/node
+        run: ssh target sudo docker cp monodance/nuxtjs/src monodance_nuxtjs_1:/home/node
 
       - name: Change Directory
         run: cd src
 
 #      - name: Execute "nuxt run build"
-#        run: ssh target cat scp_test/README.md
+#        run: npm run build
 
 #      - name: Stopping Old "npm nuxt start" Process
 #        run: ps -ef | grep "node /home/node/src/node_modules/.bin/nuxt start" | grep -v grep | awk '{ print "kill -9", $2 }' | sh
