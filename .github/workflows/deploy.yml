@@ -17,7 +17,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  preparing-to-build:
+  build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -41,7 +41,7 @@ jobs:
               IdentityFile ~/.ssh/id_rsa
 
       - name: Deploy to demo-server by scp
-        run: scp -r README.md ubuntu@target:/home/node/ubuntu/scp_test
+        run: scp -r README.md ubuntu@target:/home/ubuntu/scp_test
 
       - name: nuxt run build
         run: ssh target cat scp_test/README.md
