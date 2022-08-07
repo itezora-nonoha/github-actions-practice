@@ -47,7 +47,7 @@ jobs:
         run: ssh target sudo docker cp monodance/nuxtjs/src monodance_nuxtjs_1:/home/node
 
       - name: Execute "npm run build"
-        run: ssh target sudo docker exec monodance_nuxtjs_1 /bin/bash /home/node/nuxt_build.sh 
+        run: ssh target sudo docker exec monodance_nuxtjs_1 /bin/bash /home/node/src/nuxt_build.sh 
 
       - name: Killing old Process and Execute "npm run start"
-        run: ssh target sudo docker exec -d monodance_nuxtjs_1 /bin/bash /home/node/nuxt_restart.sh 
+        run: ssh target sudo docker exec -d monodance_nuxtjs_1 /bin/bash /home/node/src/nuxt_restart.sh 
