@@ -40,7 +40,12 @@ jobs:
           key: ${{ secrets.SSH_KEY }} # 必須
           name: id_rsa # 省略可
           known_hosts: ${{ secrets.KNOWN_HOSTS }} # 必須
-          
+          config: |                                         # will be appended to existing .ssh/config
+            Host target
+              HostName 18.176.3.96
+              User ubuntu
+              IdentityFile ~/.ssh/id_rsa-target
+              ProxyCommand ssh -W %h:%p bastion
       - name: run deploy script
         run: bash ls
 #        run: bash deploy.sh
