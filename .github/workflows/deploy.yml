@@ -43,15 +43,8 @@ jobs:
       - name: Deploy to Demo-Server by scp
         run: scp -r README.md ubuntu@target:/home/ubuntu/scp_test
 
-
       - name: Deploy to Nuxtjs Container from Demo-Server
         run: ssh target sudo docker cp monodance/nuxtjs/src monodance_nuxtjs_1:/home/node
 
       - name: Execute "npm run build"
-        run: ssh target "sudo docker exec -it monodance_nuxtjs_1 /bin/bash;cd src;npm run build"
-
-#      - name: Stopping Old "npm nuxt start" Process
-#        run: ps -ef | grep "node /home/node/src/node_modules/.bin/nuxt start" | grep -v grep | awk '{ print "kill -9", $2 }' | sh
-
-#      - name: Starting New "npm nuxt start" Process
-#        run: npm run start
+        run: ssh target "sudo docker exec -it monodance_nuxtjs_1 /bin/bash /home/node/src/deploy_and_restart.sh"
