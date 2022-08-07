@@ -5,10 +5,10 @@ name: CI
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+#  push:
+#    branches: [ "main" ]
+#  pull_request:
+#    branches: [ "main" ]
 
   # Allows you to run this workflow manually from the Actions tab
   # （Actionsのジョブを手動でも実行できるようにする）
@@ -40,9 +40,20 @@ jobs:
               User ubuntu
               IdentityFile ~/.ssh/id_rsa
 
-      - name: Deploy to demo-server by scp
+      - name: Deploy to Demo-Server by scp
         run: scp -r README.md ubuntu@target:/home/ubuntu/scp_test
 
-      - name: nuxt run build
-        run: ssh target cat scp_test/README.md
-#        run: bash deploy.sh
+      - name: Deploy to Nuxtjs Container from Demo-Server
+        run: ssh sudo docker cp monodance/nuxtjs/src monodance_nuxtjs_1:/home/node
+
+      - name: Change Directory
+        run: cd src
+
+#      - name: Execute "nuxt run build"
+#        run: ssh target cat scp_test/README.md
+
+#      - name: Stopping Old "npm nuxt start" Process
+#        run: ps -ef | grep "node /home/node/src/node_modules/.bin/nuxt start" | grep -v grep | awk '{ print "kill -9", $2 }' | sh
+
+#      - name: Starting New "npm nuxt start" Process
+#        run: npm run start
