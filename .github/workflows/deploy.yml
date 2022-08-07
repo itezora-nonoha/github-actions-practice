@@ -40,15 +40,9 @@ jobs:
               User ubuntu
               IdentityFile ~/.ssh/id_rsa
 
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
       - name: Deploy to demo-server by scp
         run: scp -r README.md ubuntu@target:/home/node/ubuntu/scp_test
 
-  build:
-    runs-on: ubuntu-latest
-    steps:
       - name: nuxt run build
         run: ssh target cat scp_test/README.md
 #        run: bash deploy.sh
