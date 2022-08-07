@@ -47,11 +47,8 @@ jobs:
       - name: Deploy to Nuxtjs Container from Demo-Server
         run: ssh target sudo docker cp monodance/nuxtjs/src monodance_nuxtjs_1:/home/node
 
-      - name: Change Directory
-        run: cd src
-
-#      - name: Execute "nuxt run build"
-#        run: npm run build
+      - name: Execute "npm run build"
+        run: ssh target "sudo docker exec -it monodance_nuxtjs_1 /bin/bash;cd src;npm run build"
 
 #      - name: Stopping Old "npm nuxt start" Process
 #        run: ps -ef | grep "node /home/node/src/node_modules/.bin/nuxt start" | grep -v grep | awk '{ print "kill -9", $2 }' | sh
