@@ -11,32 +11,24 @@ on:
     branches: [ "main" ]
 
   # Allows you to run this workflow manually from the Actions tab
+  # （Actionsのジョブを手動でも実行できるようにする）
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  preparing-to-build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # （リポジトリの内容をActions上の仮想環境にチェックアウト）
       - uses: actions/checkout@v3
       
-      - name: Repository Files Check
-        run: ls
-        
-      # Runs a single command using the runners shell
-#      - name: Run a one-line script
-#        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-#      - name: Run a multi-line script
-#        run: |
-#          echo Add other actions to build,
-#          echo test, and deploy your project.
+      # Install SSH Key
+      # （有志の方が作成したActionsを用い、リポジトリのSecretsとして登録してある秘密鍵を仮想環境上に持ってくる）
       - name: Install SSH key
         uses: shimataro/ssh-key-action@v2
         with: # shimataro/ssh-key-actionに渡すパラメーター
@@ -48,6 +40,15 @@ jobs:
               User ubuntu
               IdentityFile ~/.ssh/id_rsa
 
-      - name: run deploy script
-        run: ssh target ls
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to demo-server by scp
+        run: scp -r README.md ubuntu@target:/home/node/ubuntu/scp_test
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: nuxt run build
+        run: ssh target cat scp_test/README.md
 #        run: bash deploy.sh
