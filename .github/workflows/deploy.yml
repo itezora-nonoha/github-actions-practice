@@ -46,5 +46,5 @@ jobs:
               IdentityFile ~/.ssh/id_rsa
 
       - name: run deploy script
-        run: ssh ubuntu@18.176.3.96
+        run: ssh ubuntu@18.176.3.96 
 #        run: bash deploy.sh
