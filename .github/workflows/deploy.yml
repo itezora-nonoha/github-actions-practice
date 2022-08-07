@@ -46,5 +46,5 @@ jobs:
       - name: Deploy to Nuxtjs Container from Demo-Server
         run: ssh target sudo docker cp monodance/nuxtjs/src monodance_nuxtjs_1:/home/node
 
-      - name: Execute "npm run build"
-        run: ssh target "sudo docker exec -it monodance_nuxtjs_1 /bin/bash /home/node/src/deploy_and_restart.sh"
+      - name: Execute "deploy_and_restart" Shell
+        run: ssh target "sudo docker exec monodance_nuxtjs_1 /bin/bash /home/node/src/deploy_and_restart.sh"
